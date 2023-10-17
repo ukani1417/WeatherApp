@@ -71,33 +71,6 @@ final class TestSearchWeatherVM: XCTestCase {
         XCTAssertTrue(prev == (searchWeatherVM.searchResults.count - 1))
     }
     
-    func test_SearchVM_With_City_Exist_Update_Record(){
-        mockAPI.cityLocationResult = .success(LocationModel(lat: "10.99", lon: "44.34"))
-        mockAPI.getCurrentWeatherResult = .success(mockAPI.weather()!)
-        coreAPI.boolResult = .success(true)
-        searchWeatherVM.searchResults.append(mockAPI.weather()!)
-        let prev = searchWeatherVM.searchResults.count
-        
-        searchWeatherVM.getCityLocation(city: "Zocca")
-        
-        XCTAssertTrue(prev == searchWeatherVM.searchResults.count)
-    }
-    
-    func test_SearchVM_With_City_Success_Weather_Success_Core_Failure_InUpdate(){
-        mockAPI.cityLocationResult = .success(cityLocation)
-        
-        let oldDTO = mockAPI.weather()!
-        let newDTO = CurrentWeatherDTO(weatherType: "Rainy", city: oldDTO.city, temp: oldDTO.temp, humidity: oldDTO.humidity, wind: oldDTO.wind, icon: oldDTO.icon, lat: oldDTO.lat, lon: oldDTO.lon)
-        
-        mockAPI.getCurrentWeatherResult = .success(oldDTO)
-        coreAPI.boolResult = .failure(.internalError)
-        searchWeatherVM.searchResults.append(oldDTO)
-        
-        
-        searchWeatherVM.getCityLocation(city: "Zocca")
-        
-        XCTAssertFalse(searchWeatherVM.searchResults.first?.weatherType == newDTO.weatherType)
-    }
 
     func test_AllCity(){
         coreAPI.list = [mockAPI.weather()!]
@@ -115,7 +88,7 @@ final class TestSearchWeatherVM: XCTestCase {
         if prev != 0 {
             searchWeatherVM.deleteRecord(index: 0)
             
-            XCTAssertLessThan(searchWeatherVM.searchResults.count, prev)
+            XCTAssertEqual(searchWeatherVM.searchResults.count, prev-1)
         }
        
         
@@ -130,5 +103,46 @@ final class TestSearchWeatherVM: XCTestCase {
         searchWeatherVM.deleteRecord(index: 0)
         
         XCTAssertEqual(prev, searchWeatherVM.searchResults.count)
+    }
+    
+    func test_Update_Success(){
+        coreAPI.boolResult = .success(true)
+        let data = mockAPI.weather()!
+        searchWeatherVM.searchResults.append(data)
+        let updateData = CurrentWeatherDTO(weatherType: data.weatherType, city: data.city, temp: "10000.0", humidity: data.humidity, wind: data.wind, icon: data.icon, lat: data.lat, lon: data.lon)
+        mockAPI.getCurrentWeatherResult = .success(updateData)
+        
+        searchWeatherVM.update(index: 0)
+        
+        XCTAssertTrue(searchWeatherVM.searchResults[0].temp == updateData.temp)
+        
+        
+        
+    }
+    
+    func test_Update_Failure(){
+        coreAPI.boolResult = .failure(.internalError)
+        let data = mockAPI.weather()!
+        searchWeatherVM.searchResults.append(data)
+        let updateData = CurrentWeatherDTO(weatherType: data.weatherType, city: data.city, temp: "10000.0", humidity: data.humidity, wind: data.wind, icon: data.icon, lat: data.lat, lon: data.lon)
+        
+//       Api responce success , core fail
+        
+        mockAPI.getCurrentWeatherResult = .success(updateData)
+        
+        searchWeatherVM.update(index: 0)
+        
+        XCTAssertTrue(searchWeatherVM.searchResults[0].temp == data.temp)
+    
+//       Api responce failure
+                
+        mockAPI.getCurrentWeatherResult = .failure(.serverError)
+        
+        searchWeatherVM.update(index: 0)
+        
+        XCTAssertTrue(searchWeatherVM.searchResults[0].temp == data.temp)
+        
+       
+    
     }
 }
