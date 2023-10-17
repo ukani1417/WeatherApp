@@ -106,4 +106,29 @@ final class TestSearchWeatherVM: XCTestCase {
         
         XCTAssertEqual(1, searchWeatherVM.searchResults.count)
     }
+    
+    func test_delete_Success(){
+        coreAPI.boolResult = .success(true)
+        searchWeatherVM.searchResults.append(mockAPI.weather()!)
+        let prev = searchWeatherVM.searchResults.count
+        
+        if prev != 0 {
+            searchWeatherVM.deleteRecord(index: 0)
+            
+            XCTAssertLessThan(searchWeatherVM.searchResults.count, prev)
+        }
+       
+        
+        
+    }
+    
+    func test_delete_Failure(){
+        coreAPI.boolResult = .failure(.internalError)
+        searchWeatherVM.searchResults.append(mockAPI.weather()!)
+        let prev = searchWeatherVM.searchResults.count
+        
+        searchWeatherVM.deleteRecord(index: 0)
+        
+        XCTAssertEqual(prev, searchWeatherVM.searchResults.count)
+    }
 }

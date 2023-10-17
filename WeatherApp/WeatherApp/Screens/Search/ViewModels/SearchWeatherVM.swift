@@ -31,30 +31,28 @@ class SearchWeatherVM {
         case .success(let data) : self.searchResults = data
         }
     }
-
     
-//City
-//        1.Exist
-//            1.1 getWeather
-//                1.1.1 update in core
-//                    1.1.1.1 true
-//                    1.1.1.2 error
-//            1.2 error
-//        2.Get Location
-//            2.1 getWeather
-//                    2.1.1 saved in core
-//                        2.1.1.1 true
-//                        2.1.1.1 error
-//            2.2 error
+    
+    //City
+    //        1.Exist
+    //            1.1 getWeather
+    //                1.1.1 update in core
+    //                    1.1.1.1 true
+    //                    1.1.1.2 error
+    //            1.2 error
+    //        2.Get Location
+    //            2.1 getWeather
+    //                    2.1.1 saved in core
+    //                        2.1.1.1 true
+    //                        2.1.1.1 error
+    //            2.2 error
     
     
     func getCityLocation(city: String){
         self.eventHandler?(.loading)
-        if let index = self.searchResults.firstIndex(where: { $0.city == city}) {
-            self.getWeather(location: LocationModel(lat: self.searchResults[index].lat,
-                                                    lon: self.searchResults[index].lon),
-                                                    index: index)
-            self.eventHandler?(.dataLoaded)
+        if searchResults.contains(where: { $0.city == city }) {
+            self.eventHandler?(.stopLoading)
+            self.eventHandler?(.error("Aleardy exist"))
         }
         else{
             repository.getCityLocation(city: city) { result in
@@ -70,35 +68,60 @@ class SearchWeatherVM {
     }
     
     func getWeather(location: LocationModel, index: Int?){
-        self.eventHandler?(.loading)
         repository.getCurrentWeather(location: location) { result in
+            self.eventHandler?(.stopLoading)
             switch result {
             case .success(let data) :
-                if let newIndex = index {
-                    let responce = self.coreRepository.update(currentWeatherDTO: data)
-                    self.eventHandler?(.stopLoading)
-                    switch responce {
-                    case .success(let ans) :
-                        if ans == true {
-                            self.searchResults[newIndex] = data
-                            self.eventHandler?(.dataLoaded)
-                        }
-                    case .failure(let coreError) :
-                        self.eventHandler?(.error(coreError.rawValue))
+                let responce = self.coreRepository.create(currentWeatherDTO: data)
+                switch responce {
+                case .success(let ans) :
+                    if ans == true {
+                        self.searchResults.insert(data, at: 0)
+                        self.eventHandler?(.dataLoaded)
                     }
+                case .failure(let coreError) :
+                    self.eventHandler?(.error(coreError.rawValue))
                 }
-                else{
-                    let responce = self.coreRepository.create(currentWeatherDTO: data)
+            case .failure(let error) :
+                self.eventHandler?(.error(error.rawValue))
+            }
+        }
+    }
+    
+    func update(index: Int){
+        self.eventHandler?(.loading)
+        if index < searchResults.count {
+            let data = searchResults[index]
+            repository.getCurrentWeather(location: LocationModel(lat: data.lat, lon: data.lon)) { result in
+                switch result {
+                case .success(let data) :
+                    let res = self.coreRepository.update(currentWeatherDTO: data)
                     self.eventHandler?(.stopLoading)
-                    switch responce {
+                    switch res {
                     case .success(let ans) :
-                        if ans == true {
-                            self.searchResults.insert(data, at: 0)
+                        if ans {
+                            self.searchResults[index] = data
                             self.eventHandler?(.dataLoaded)
                         }
-                    case .failure(let coreError) :
-                        self.eventHandler?(.error(coreError.rawValue))
+                    case .failure(let error) :
+                        self.eventHandler?(.error(error.rawValue))
                     }
+                case .failure(let error) :
+                    self.eventHandler?(.stopLoading)
+                    self.eventHandler?(.error(error.rawValue))
+                }
+            }
+        }
+        
+    }
+    func deleteRecord(index:Int){
+        if index < searchResults.count {
+            let responce = coreRepository.delete(city: searchResults[index].city)
+            switch responce {
+            case .success(let res) :
+                if res {
+                    self.searchResults.remove(at: index)
+                    self.eventHandler?(.dataLoaded)
                 }
             case .failure(let error) :
                 self.eventHandler?(.error(error.rawValue))

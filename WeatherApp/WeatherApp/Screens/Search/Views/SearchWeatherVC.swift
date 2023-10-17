@@ -195,12 +195,40 @@ extension SearchWeatherVC : UITextFieldDelegate {
 // MARK: - CollectionView Delegate
 
 extension SearchWeatherVC : UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let data = searchWeatherVM.searchResults[indexPath.row]
-        delegate?.sendData(data: data)
-        self.tabBarController?.selectedIndex = 0
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
         
+        let dialogMessage = UIAlertController(title: "Actions", message: "Move : Move to home screen\n Delete : Delete this record \n Cancel :  Cancel this operation", preferredStyle: .alert)
+        
+//        Move to screen
+        let Move = UIAlertAction(title: "Move", style: .default, handler: { (action) -> Void in
+            let data = self.searchWeatherVM.searchResults[indexPath.row]
+            self.delegate?.sendData(data: data)
+            self.tabBarController?.selectedIndex = 0
+        })
+                
+//       Delete
+        let Delete = UIAlertAction(title: "Delete", style: .destructive) { (action) -> Void in
+            self.searchWeatherVM.deleteRecord(index: indexPath.row)
+        }
+        
+//        Update
+        let Update = UIAlertAction(title: "Update", style: .default) { action in
+            self.searchWeatherVM.update(index: indexPath.row)
+        }
+//        Cancel
+        let Cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in
+            
+        }
+    
+        dialogMessage.addAction(Update)
+        dialogMessage.addAction(Move)
+        dialogMessage.addAction(Delete)
+        dialogMessage.addAction(Cancel)
+        
+        self.present(dialogMessage, animated: true)
     }
+    
 }
 
 //  MARK:  - CollectionView Datasource

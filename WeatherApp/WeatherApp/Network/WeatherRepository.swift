@@ -27,13 +27,8 @@ class WeatherRepository : Repository {
             switch result {
             case .success(let cityData) :
                 if let cityData = cityData.first  {
-                    if city == cityData.name {
-                        let location = LocationModel(lat: String(cityData.lat), lon: String(cityData.lon))
-                        completation(.success(location))
-                    }
-                    else{
-                        completation(.failure(.cityNotFound))
-                    }
+                    let location = LocationModel(lat: String(cityData.lat), lon: String(cityData.lon))
+                    completation(.success(location))
                 }
                 else {
                     completation(.failure(.cityNotFound))

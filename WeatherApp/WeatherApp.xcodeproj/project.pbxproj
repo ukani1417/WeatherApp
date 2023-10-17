@@ -205,6 +205,7 @@
 		E81BCF6E2ADEA9F20033DF5D /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				E8F9AB482ADEC86700DD8842 /* Tabs */,
 				E84CFB2B2ADD7DA600513465 /* Home */,
 				E84CFB2C2ADD7DC800513465 /* Search */,
 				E84CFB2E2ADD7DDC00513465 /* Forecast */,
@@ -330,7 +331,6 @@
 				E81BCF352ADE40E10033DF5D /* BottomCollectionViewCell.swift */,
 				E81BCF342ADE40E10033DF5D /* CurrentWeatherVC.swift */,
 				E81BCF322ADE40E10033DF5D /* TopCollectionViewCell.swift */,
-				E81BCF332ADE40E10033DF5D /* WeatherTBC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -385,6 +385,14 @@
 			children = (
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		E8F9AB482ADEC86700DD8842 /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				E81BCF332ADE40E10033DF5D /* WeatherTBC.swift */,
+			);
+			path = Tabs;
 			sourceTree = "<group>";
 		};
 		E8FD1C482ADD7B5E004A80D5 = {
