@@ -212,6 +212,30 @@
 			path = Screens;
 			sourceTree = "<group>";
 		};
+		E81BCF712ADEBB700033DF5D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E84CFB4C2ADD843600513465 /* CurrentWeatherDTO.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E81BCF722ADEBB8A0033DF5D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E81BCF732ADEBB920033DF5D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E84CFB4E2ADD843600513465 /* FiveDaysFirecastModel.swift */,
+				E84CFB4A2ADD843600513465 /* ForecastDTO.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		E84CFB272ADD7D6500513465 /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,8 +280,9 @@
 		E84CFB2B2ADD7DA600513465 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				E84CFB3C2ADD839700513465 /* ViewModel */,
-				E84CFB3B2ADD838E00513465 /* View */,
+				E81BCF712ADEBB700033DF5D /* Models */,
+				E84CFB3C2ADD839700513465 /* ViewModels */,
+				E84CFB3B2ADD838E00513465 /* Views */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -265,8 +290,9 @@
 		E84CFB2C2ADD7DC800513465 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				E84CFB3E2ADD83B300513465 /* ViewModel */,
-				E84CFB3D2ADD83AD00513465 /* View */,
+				E81BCF722ADEBB8A0033DF5D /* Models */,
+				E84CFB3E2ADD83B300513465 /* ViewModels */,
+				E84CFB3D2ADD83AD00513465 /* Views */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -274,8 +300,9 @@
 		E84CFB2E2ADD7DDC00513465 /* Forecast */ = {
 			isa = PBXGroup;
 			children = (
-				E84CFB402ADD83C800513465 /* ViewModel */,
-				E84CFB3F2ADD83BC00513465 /* View */,
+				E81BCF732ADEBB920033DF5D /* Models */,
+				E84CFB402ADD83C800513465 /* ViewModels */,
+				E84CFB3F2ADD83BC00513465 /* Views */,
 			);
 			path = Forecast;
 			sourceTree = "<group>";
@@ -297,7 +324,7 @@
 			path = Font;
 			sourceTree = "<group>";
 		};
-		E84CFB3B2ADD838E00513465 /* View */ = {
+		E84CFB3B2ADD838E00513465 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				E81BCF352ADE40E10033DF5D /* BottomCollectionViewCell.swift */,
@@ -305,60 +332,57 @@
 				E81BCF322ADE40E10033DF5D /* TopCollectionViewCell.swift */,
 				E81BCF332ADE40E10033DF5D /* WeatherTBC.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		E84CFB3C2ADD839700513465 /* ViewModel */ = {
+		E84CFB3C2ADD839700513465 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				E84CFB4D2ADD843600513465 /* LocationModel.swift */,
 				E81BCF2A2ADE405F0033DF5D /* CurrentWeatherVM.swift */,
+				E84CFB4B2ADD843600513465 /* CurrentWeatherModel.swift */,
 			);
-			path = ViewModel;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		E84CFB3D2ADD83AD00513465 /* View */ = {
+		E84CFB3D2ADD83AD00513465 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				E81BCF3B2ADE41280033DF5D /* SearchWeatherVC.swift */,
 				E81BCF3A2ADE41280033DF5D /* SearchResultViewCell.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		E84CFB3E2ADD83B300513465 /* ViewModel */ = {
+		E84CFB3E2ADD83B300513465 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				E81BCF3E2ADE415D0033DF5D /* SearchWeatherVM.swift */,
 			);
-			path = ViewModel;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		E84CFB3F2ADD83BC00513465 /* View */ = {
+		E84CFB3F2ADD83BC00513465 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				E81BCF432ADE42AD0033DF5D /* ForecastCollectionHeaderView.swift */,
 				E81BCF442ADE42AD0033DF5D /* ForecastCollectionViewCell.swift */,
 				E81BCF452ADE42AD0033DF5D /* ForeCastReportVC.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		E84CFB402ADD83C800513465 /* ViewModel */ = {
+		E84CFB402ADD83C800513465 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				E81BCF492ADE42C70033DF5D /* ForecastWeatherVM.swift */,
 			);
-			path = ViewModel;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		E84CFB492ADD841200513465 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E84CFB4C2ADD843600513465 /* CurrentWeatherDTO.swift */,
-				E84CFB4B2ADD843600513465 /* CurrentWeatherModel.swift */,
-				E84CFB4E2ADD843600513465 /* FiveDaysFirecastModel.swift */,
-				E84CFB4A2ADD843600513465 /* ForecastDTO.swift */,
-				E84CFB4D2ADD843600513465 /* LocationModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
