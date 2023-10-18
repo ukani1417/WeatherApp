@@ -32,22 +32,6 @@ class SearchWeatherVM {
         }
     }
     
-    
-    //City
-    //        1.Exist
-    //            1.1 getWeather
-    //                1.1.1 update in core
-    //                    1.1.1.1 true
-    //                    1.1.1.2 error
-    //            1.2 error
-    //        2.Get Location
-    //            2.1 getWeather
-    //                    2.1.1 saved in core
-    //                        2.1.1.1 true
-    //                        2.1.1.1 error
-    //            2.2 error
-    
-    
     func getCityLocation(city: String){
         self.eventHandler?(.loading)
         if searchResults.contains(where: { $0.city == city }) {

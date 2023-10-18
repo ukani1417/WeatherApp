@@ -29,14 +29,5 @@ extension CDCurrentWeatherDTO {
 }
 
 extension CDCurrentWeatherDTO : Identifiable {
-    func toConvert()->CurrentWeatherDTO {
-        return CurrentWeatherDTO(weatherType: self.weatherType!,
-                                 city: self.city!,
-                                 temp: self.temp!,
-                                 humidity: self.humidity!,
-                                 wind: self.wind!,
-                                 icon: self.icon!+"d",
-                                 lat: self.lat!,
-                                 lon: self.lon!)
-    }
+    
 }
